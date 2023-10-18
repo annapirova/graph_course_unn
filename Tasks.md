@@ -22,3 +22,15 @@ https://igraph.org/c/doc/igraph-Foreign.html#igraph_read_graph_edgelist
 
 4. Научиться генерировать графы типа R-Mat, генератор https://github.com/farkhor/PaRMAT
 - сохранить как edgelist
+
+## Задание 2. SSSP и MST
+1. Научиться запускать на python и С igraph алгоритмы SSSP, MST + свой алгоритм. Графы генерировать случайно типа Эрдеша-Реньи / Барабаши-Альберт / RGG / lattice.
+
+2. Сделать визуализацию алгоритмов на python igraph
+
+Общая документация по рисованию и примеры:
+
+https://python.igraph.org/en/stable/tutorials/index.html
+
+https://python.igraph.org/en/stable/visualisation.html
+
