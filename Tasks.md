@@ -39,6 +39,10 @@ https://python.igraph.org/en/stable/tutorials/index.html
 
 https://python.igraph.org/en/stable/visualisation.html
 
+
+https://python.igraph.org/en/stable/tutorial.html#layouts-and-plotting
+тут таблица layouts
+
 ## Задание 3. GAP, delta-stepping
 В GAP Провести эксперименты с разными значениями delta (-d) на одном из типов случайных графов. 
 - Граф генерировать в GAP (-g или -u), варьировать степень вершины (-k). Три варианта степени вершины, один размер графа. Ваш размер графа = 2^(20 + номер выбранной задачи).
