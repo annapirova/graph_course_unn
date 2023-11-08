@@ -1,0 +1,87 @@
+Инструкция по сборке:
+
+Делаем все под Ubuntu на кластере или локально.
+
+1. 
+
+git clone https://github.com/IntelligentSoftwareSystems/Galois
+
+2. 
+
+SRC_DIR - путь до директории Galois.
+BUILD_DIR - путь до директории Galois\build
+
+mkdir -p $BUILD_DIR
+cmake -S $SRC_DIR -B $BUILD_DIR -DCMAKE_BUILD_TYPE=Release
+
+или
+
+cmake -S $SRC_DIR -B $BUILD_DIR -DCMAKE_BUILD_TYPE=Debug
+
+cmake нам скажет чего не хватает (mpi, компилятор и тд). Ubuntu сама подсказывает какими командами это доустановить. 
+После того, как доустановили - заново вводим команду выше.
+
+3.
+
+make -C $BUILD_DIR/lonestar/<app-dir-name> -j - так мы собираем конкретный графовый алгоритм
+
+можем сразу все:
+
+cd $BUILD_DIR/lonestar
+make -j
+
+4.
+
+собираем конвертер для графа
+
+cd $BUILD_DIR
+make graph-convert
+./tools/graph-convert/graph-convert --help
+
+
+5. Сборка для системы с распределенной памятью
+
+cmake ${GALOIS_ROOT} -DGALOIS_ENABLE_DIST=1 (GALOIS_ROOT - корневая папка Galois)
+
+cd $GALOIS_ROOT
+git submodule init
+git submodule update
+
+make -j
+
+
+
+
+
+Инструкция по запуску:
+
+1.Конвертация
+
+Нам нужно сконвертировать наш граф. 
+
+./tools/graph-convert/graph-convert --help - покажет все возможные форматы
+
+Пример команды для графа с float32 весами на ребрах.
+
+./graph-convert --edgelist2gr  --edgeType=float32 beacxc.mtx beacxc.gr (beacxc.mtx лежит в моем случае в папке с конвретером, в общем случае нужно указывать не имя файла, а полный путь)
+
+Пример команды для графа без весов на ребрах.
+
+./graph-convert --edgelist2gr  --edgeType=void rmat10.rmat rmat10.gr
+
+2. Пример запуска на системе с общей памятью
+
+cd ~/Github/GaloisLast/Galois/build/lonestar/analytics/cpu/bfs
+
+./bfs-cpu ~/Github/GaloisLast/Galois/build/tools/graph-convert/beacxc.gr -exec PARALLEL -algo AsyncTile -startNode 40 -t 10
+
+(40 - стартовая вершина, 10 потоков)
+
+3. Пример запуска на системе с распределенной памятью
+
+cd ~/Github/GaloisLast/Galois/lonestar/analytics/distributed/bfs
+
+GALOIS_DO_NOT_BIND_THREADS=1 mpirun -n 3 ./bfs-push-dist ~/Github/GaloisLast/Galois/build/tools/graph-convert/beacxc.gr -t=4 -startNode=10 --runs=1 -partition=oe
+
+(3 процесса, по 4 потока, стартовая вершина - 10)
+
