@@ -14,6 +14,7 @@ module load gcc-9.5.0
 ``` 
 . /common/intel_oneapi/setvars.sh
 conda activate /common/home/group/slasolver/soft/Galois/galois_env
+export LD_LIBRARY_PATH=/common/home/group/slasolver/soft/Galois/galois_env/lib:$LD_LIBRARY_PATH
 ```
 
 #### cmake v 3.20
