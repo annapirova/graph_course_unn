@@ -2,7 +2,8 @@
 #### Загрузка компилятора intel2023, intelMPI, MKL
 ``` 
 module load gcc-9.5.0
-. /common/intel_oneapi/setvars.sh 
+. /common/intel_oneapi/setvars.sh
+export OMP_NUM_THREADS=XXXXX
 ```
 #### Загрузка окружения для Galois
 ``` 
